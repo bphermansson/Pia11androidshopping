@@ -11,18 +11,29 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import se.magictechnology.pia11shopping.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
 
+    var _binding : FragmentLoginBinding? = null
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        //return inflater.inflate(R.layout.fragment_login, container, false)
+
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,9 +41,9 @@ class LoginFragment : Fragment() {
 
         auth = Firebase.auth
 
-        view.findViewById<Button>(R.id.loginButton).setOnClickListener {
-            val userEmail = view.findViewById<EditText>(R.id.loginEmailET).text.toString()
-            val userPassword = view.findViewById<EditText>(R.id.loginPasswordET).text.toString()
+        binding.loginButton.setOnClickListener {
+            val userEmail = binding.loginEmailET.text.toString()
+            val userPassword = binding.loginPasswordET.text.toString()
 
 
             auth.signInWithEmailAndPassword(userEmail, userPassword)
@@ -47,10 +58,10 @@ class LoginFragment : Fragment() {
                 }
         }
 
-        view.findViewById<Button>(R.id.registerButton).setOnClickListener {
+        binding.registerButton.setOnClickListener {
 
-            val userEmail = view.findViewById<EditText>(R.id.loginEmailET).text.toString()
-            val userPassword = view.findViewById<EditText>(R.id.loginPasswordET).text.toString()
+            val userEmail = binding.loginEmailET.text.toString()
+            val userPassword = binding.loginPasswordET.text.toString()
 
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(requireActivity()) { task ->
