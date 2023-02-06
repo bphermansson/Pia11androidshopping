@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -23,9 +25,13 @@ class ShoppingFragment : Fragment() {
 
     var shopadapter = ShoppingAdapter()
 
+    val model by viewModels<ShoplistViewModel>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_shopping, container, false)
+
+        shopadapter.frag = this
 
         _binding = FragmentShoppingBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -43,8 +49,6 @@ class ShoppingFragment : Fragment() {
         binding.shoppingRV.adapter = shopadapter
         binding.shoppingRV.layoutManager = LinearLayoutManager(requireContext())
 
-
-
         /*
         view.findViewById<Button>(R.id.logoutButton).setOnClickListener {
             Firebase.auth.signOut()
@@ -57,45 +61,25 @@ class ShoppingFragment : Fragment() {
 
         binding.addShoppingButton.setOnClickListener {
             val addshopname = binding.shoppingNameET.text.toString()
+            val addshopamount = binding.shoppingAmountET.text.toString()
 
-            val tempShopitem = ShoppingItem(addshopname)
+            val amount = addshopamount.toIntOrNull()
+            if(amount == null) {
+                // Visa felmeddelande
+            } else {
+                model.addShopping(addshopname, amount) {
+                    shopadapter.notifyDataSetChanged()
+                }
+            }
 
-            val database = Firebase.database
-            val shopRef = database.getReference("androidshopping").child(Firebase.auth.currentUser!!.uid)
-            shopRef.push().setValue(tempShopitem)
 
-            loadShopping()
         }
 
-        loadShopping()
-    }
-
-
-    fun loadShopping() {
-        /*
-        var shoplist = mutableListOf<ShoppingItem>()
-
-        var s1 = ShoppingItem("banan")
-        var s2 = ShoppingItem("apelsin")
-
-        shoplist.add(s1)
-        shoplist.add(s2)
-
-        shopadapter.shopitems = shoplist
-        */
-
-
-        val database = Firebase.database
-        val shopRef = database.getReference("androidshopping").child(Firebase.auth.currentUser!!.uid)
-        shopRef.get().addOnSuccessListener {
-            val shoplist = mutableListOf<ShoppingItem>()
-            it.children.forEach { childsnap ->
-                shoplist.add(childsnap.getValue<ShoppingItem>()!!)
-            }
-            shopadapter.shopitems = shoplist
+        model.loadShopping() {
             shopadapter.notifyDataSetChanged()
         }
-
     }
+
+
 }
 
