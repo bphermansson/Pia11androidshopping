@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -49,11 +51,21 @@ class ShoppingFragment : Fragment() {
         binding.shoppingRV.adapter = shopadapter
         binding.shoppingRV.layoutManager = LinearLayoutManager(requireContext())
 
-        /*
-        view.findViewById<Button>(R.id.logoutButton).setOnClickListener {
-            Firebase.auth.signOut()
+        val shopObserver = Observer<List<ShoppingItem>> {
+            shopadapter.notifyDataSetChanged()
         }
-        */
+        model.shopitems.observe(viewLifecycleOwner, shopObserver)
+
+        val errorObserver = Observer<String> {
+            if(it == "") {
+                binding.errorMessTV.visibility = View.GONE
+            } else {
+                binding.errorMessTV.text = it
+                binding.errorMessTV.visibility = View.VISIBLE
+            }
+        }
+        model.errorMessage.observe(viewLifecycleOwner, errorObserver)
+
 
         binding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()
@@ -63,21 +75,13 @@ class ShoppingFragment : Fragment() {
             val addshopname = binding.shoppingNameET.text.toString()
             val addshopamount = binding.shoppingAmountET.text.toString()
 
-            val amount = addshopamount.toIntOrNull()
-            if(amount == null) {
-                // Visa felmeddelande
-            } else {
-                model.addShopping(addshopname, amount) {
-                    shopadapter.notifyDataSetChanged()
-                }
-            }
+            model.addShopping(addshopname, addshopamount)
 
-
+            binding.shoppingNameET.setText("")
+            binding.shoppingAmountET.setText("")
         }
 
-        model.loadShopping() {
-            shopadapter.notifyDataSetChanged()
-        }
+        model.loadShopping()
     }
 
 
