@@ -1,4 +1,4 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage

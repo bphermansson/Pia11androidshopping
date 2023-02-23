@@ -1,4 +1,4 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import android.graphics.Bitmap
 import android.util.Log

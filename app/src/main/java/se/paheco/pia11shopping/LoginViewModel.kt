@@ -1,7 +1,6 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth

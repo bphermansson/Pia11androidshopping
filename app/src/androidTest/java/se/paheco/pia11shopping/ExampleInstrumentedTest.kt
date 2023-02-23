@@ -1,4 +1,4 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,9 +1,8 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.google.firebase.auth.ktx.auth

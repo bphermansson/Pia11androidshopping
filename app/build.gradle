@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'se.magictechnology.pia11shopping'
+    namespace 'se.paheco.pia11shopping'
     compileSdk 33
 
     defaultConfig {
-        applicationId "se.magictechnology.pia11shopping"
+        applicationId "se.paheco.pia11shopping"
         minSdk 28
         targetSdk 33
         versionCode 1

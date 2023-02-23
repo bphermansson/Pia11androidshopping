@@ -1,6 +1,5 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -11,17 +10,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import se.magictechnology.pia11shopping.databinding.FragmentShopDetailBinding
-import se.magictechnology.pia11shopping.databinding.FragmentShoppingBinding
-import java.io.ByteArrayOutputStream
+import se.paheco.pia11shopping.databinding.FragmentShopDetailBinding
 import java.io.File
 
 class ShopDetailFragment(val currentShop : ShoppingItem) : Fragment() {

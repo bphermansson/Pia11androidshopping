@@ -1,19 +1,14 @@
-package se.magictechnology.pia11shopping
+package se.paheco.pia11shopping
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import se.magictechnology.pia11shopping.databinding.FragmentLoginBinding
+import se.paheco.pia11shopping.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
