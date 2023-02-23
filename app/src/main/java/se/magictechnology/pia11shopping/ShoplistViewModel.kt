@@ -1,11 +1,15 @@
 package se.magictechnology.pia11shopping
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 
 class ShoplistViewModel : ViewModel() {
 
@@ -81,6 +85,32 @@ class ShoplistViewModel : ViewModel() {
         saveitem.shopdone = isdone
         shopRef.child(doneitem.fbid!!).setValue(saveitem).addOnCompleteListener {
             //loadShopping()
+        }
+    }
+
+    fun saveShopItem(saveitem : ShoppingItem) {
+        val database = Firebase.database
+        val shopRef = database.getReference("androidshopping").child(Firebase.auth.currentUser!!.uid)
+        shopRef.child(saveitem.fbid!!).setValue(saveitem).addOnCompleteListener {
+            loadShopping()
+        }
+    }
+
+    fun saveShopImage(saveitem : ShoppingItem, saveimage : Bitmap) {
+
+        // TODO: Skala ner bild
+
+        var storageRef = Firebase.storage.reference
+        var imageRef = storageRef.child("shoppingimages").child(Firebase.auth.currentUser!!.uid)
+
+        val baos = ByteArrayOutputStream()
+        saveimage.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+        val data = baos.toByteArray()
+
+        imageRef.child(saveitem.fbid!!).putBytes(data).addOnFailureListener {
+            Log.i("PIA11DEBUG", "UPLOAD FAIL")
+        }.addOnSuccessListener {
+            Log.i("PIA11DEBUG", "UPLOAD OK")
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 
 class ShoppingAdapter : RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
@@ -62,12 +63,14 @@ class ShoppingAdapter : RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
             frag.model.doneShop(currentShop, holder.shoppingCheckbox.isChecked)
         }
 
-        /*
+
         holder.itemView.setOnClickListener {
-            // TODO: Gå till läs mer
-            frag.model.deleteShop(currentShop)
+            frag.requireActivity().supportFragmentManager.commit {
+                add(R.id.mainFragCon, ShopDetailFragment(currentShop))
+                addToBackStack(null)
+            }
         }
-        */
+
     }
 
     override fun getItemCount(): Int {

@@ -27,7 +27,7 @@ class ShoppingFragment : Fragment() {
 
     var shopadapter = ShoppingAdapter()
 
-    val model by viewModels<ShoplistViewModel>()
+    val model by activityViewModels<ShoplistViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
