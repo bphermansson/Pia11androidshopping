@@ -98,13 +98,13 @@ class ShoplistViewModel : ViewModel() {
 
     fun saveShopImage(saveitem : ShoppingItem, saveimage : Bitmap) {
 
-        // TODO: Skala ner bild
+        val smallerImage = resizePhoto(saveimage, 500)
 
         var storageRef = Firebase.storage.reference
         var imageRef = storageRef.child("shoppingimages").child(Firebase.auth.currentUser!!.uid)
 
         val baos = ByteArrayOutputStream()
-        saveimage.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+        smallerImage.compress(Bitmap.CompressFormat.JPEG, 80, baos)
         val data = baos.toByteArray()
 
         imageRef.child(saveitem.fbid!!).putBytes(data).addOnFailureListener {
@@ -114,4 +114,9 @@ class ShoplistViewModel : ViewModel() {
         }
     }
 
+    fun resizePhoto(bitmap: Bitmap, newWidth : Int): Bitmap {
+        val aspRat : Float = bitmap.height.toFloat() / bitmap.width.toFloat()
+        val newHeight = newWidth * aspRat
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight.toInt(), false)
+    }
 }
